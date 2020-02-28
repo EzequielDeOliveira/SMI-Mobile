@@ -11,6 +11,7 @@
 <script>
 import simpleList from '../components/simpleList.vue'
 import MASTER from '../services/masterApi/http-common'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'TransducerList',
@@ -58,6 +59,9 @@ export default {
       })
     this.loading = false
   },
+  computed: {
+    ...mapGetters('campusData', ['campus'])
+  },
   methods: {
     async addInfos (item) {
       let id = parseInt(item.campus.split('/')[4], 10)
@@ -104,7 +108,7 @@ export default {
 
     filterTransducers () {
       let arr = this.transducers
-      let campus = this.$store.state.campus
+      let campus = this.campus
       let transducers = []
       arr.forEach((elem) => {
         if (campus.id === null || elem.campus_id === campus.id) {

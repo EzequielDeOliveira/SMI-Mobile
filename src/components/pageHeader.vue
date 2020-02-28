@@ -31,6 +31,8 @@
 </template>
 <script>
 import MASTER from '../services/masterApi/http-common'
+import { mapActions } from 'vuex'
+
 export default {
   name: 'pageHeader',
   props: {
@@ -65,9 +67,10 @@ export default {
       })
   },
   methods: {
+    ...mapActions('campusData', ['changeCampus']),
     onItemClick (id) {
       this.selected = this.options.findIndex(x => x.id === id)
-      this.$store.commit('change', this.options[this.selected])
+      this.changeCampus(this.options[this.selected])
     }
   }
 }

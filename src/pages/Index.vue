@@ -84,7 +84,7 @@ export default {
     if (this.$firebase.messaging.isSupported()) {
       const messaging = this.$firebase.messaging()
 
-      messaging.usePublicVapidKey('')
+      messaging.usePublicVapidKey(process.env.VAPID_KEY)
 
       messaging
         .requestPermission()

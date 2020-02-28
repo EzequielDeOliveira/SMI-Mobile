@@ -24,6 +24,7 @@
     "firebase": "^7.9.2",
     "leaflet": "^1.6.0",
     "quasar": "^1.0.0",
+    "quasar-dotenv": "^1.0.5",
     "vue-axios": "^2.1.5",
     "vue2-leaflet": "^2.4.2",
     "vuex": "^3.1.2",

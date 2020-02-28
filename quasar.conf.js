@@ -1,5 +1,6 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
+const env = require('quasar-dotenv').config()
 
 module.exports = function (ctx) {
   return {
@@ -66,6 +67,7 @@ module.exports = function (ctx) {
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
+      env: env,
       scopeHoisting: true,
       // vueRouterMode: 'history',
       // showProgress: false,

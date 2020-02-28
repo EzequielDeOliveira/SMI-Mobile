@@ -34,3 +34,7 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+
+# environment variables
+.env
+/src-pwa/env-sw.js

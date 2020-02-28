@@ -78,6 +78,18 @@ module.exports = function (ctx) {
             formatter: require('eslint').CLIEngine.getFormatter('stylish')
           }
         })
+      },
+      chainWebpack(chain) {
+        if (ctx.mode.pwa) {
+          chain
+            .plugin('copy-static-files')
+            .use(require('copy-webpack-plugin'), [
+              [{
+                from: 'src-pwa/firebase-messaging-sw.js',
+                to: ''
+              }]
+            ])
+        }
       }
     },
 

@@ -1,6 +1,11 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
+const fs = require('fs'); 
 const env = require('quasar-dotenv').config()
+
+fs.writeFileSync('./src-pwa/env-sw.js',  `const process = ${JSON.stringify({
+  env: env
+}, null, 2)}`)
 
 module.exports = function (ctx) {
   return {
@@ -96,6 +101,10 @@ module.exports = function (ctx) {
               [{
                 from: 'src-pwa/firebase-messaging-sw.js',
                 to: ''
+              },
+              {
+                from: 'src-pwa/env-sw.js',
+                to: '',
               }]
             ])
         }

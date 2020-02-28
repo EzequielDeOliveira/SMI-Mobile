@@ -65,6 +65,15 @@ module.exports = function (ctx) {
 
       // https://quasar.dev/quasar-cli/cli-documentation/handling-webpack
       extendWebpack (cfg) {
+        cfg.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /node_modules/,
+          options: {
+            formatter: require('eslint').CLIEngine.getFormatter('stylish')
+          }
+        })
       }
     },
 
@@ -89,9 +98,9 @@ module.exports = function (ctx) {
       // workboxPluginMode: 'InjectManifest',
       // workboxOptions: {}, // only for NON InjectManifest
       manifest: {
-        // name: 'SMI',
-        // short_name: 'SMI',
-        // description: 'A Quasar Framework app',
+        name: 'Sistema de Monitoramento de Insumos',
+        short_name: 'SMI',
+        description: 'Sistema de Monitoramento de Insumos',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',

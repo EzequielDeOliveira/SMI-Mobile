@@ -3,7 +3,7 @@
     <page-header :type="tab" />
     <q-tab-panels v-model="tab" class="main-panel">
       <q-tab-panel name="occurences" class="q-pl-none">
-        <occurences class="q-mb-xl"/>
+        <occurences class="q-mb-xl" />
       </q-tab-panel>
 
       <q-tab-panel name="meters">
@@ -11,7 +11,7 @@
       </q-tab-panel>
 
       <q-tab-panel name="settings">
-        <setting/>
+        <setting />
       </q-tab-panel>
     </q-tab-panels>
 
@@ -58,6 +58,7 @@ import pageHeader from '../components/pageHeader.vue'
 import occurences from '../components/occurences.vue'
 import transducerList from '../components/transducerList.vue'
 import setting from '../components/setting.vue'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'PageIndex',
@@ -72,6 +73,50 @@ export default {
   data () {
     return {
       tab: 'occurences'
+    }
+  },
+
+  methods: {
+    ...mapActions('storedData', ['togglePermission', 'saveToken'])
+  },
+
+  mounted () {
+    if (this.$firebase.messaging.isSupported()) {
+      const messaging = this.$firebase.messaging()
+
+      messaging.usePublicVapidKey('')
+
+      messaging
+        .requestPermission()
+        .then(() => {
+          console.log('Notification permission granted.')
+          messaging.getToken().then(token => {
+            console.log('New token created: ', token)
+            this.saveToken(token)
+            this.togglePermission(true)
+          })
+        })
+        .catch(err => {
+          console.log('Unable to get permission to notify.', err)
+          this.togglePermission(false)
+        })
+
+      messaging.onTokenRefresh(() => {
+        messaging
+          .getToken()
+          .then(function (newToken) {
+            console.log('Token refreshed: ', newToken)
+            this.saveToken(newToken)
+            this.togglePermission(true)
+          })
+          .catch(function (err) {
+            console.log('Unable to retrieve refreshed token ', err)
+            this.togglePermission(false)
+          })
+      })
+    } else {
+      this.saveToken(this.$route.query.token)
+      console.log('token was saved from query')
     }
   }
 }

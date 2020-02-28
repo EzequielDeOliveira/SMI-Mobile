@@ -1,7 +1,7 @@
 
 const routes = [
   {
-    path: '/',
+    path: '/:token?',
     component: () => import('layouts/MyLayout.vue'),
     children: [
       { path: '/lastHours', component: () => import('pages/LastHours.vue') },
